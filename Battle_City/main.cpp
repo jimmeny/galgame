@@ -1,16 +1,18 @@
 ﻿#include <hge.h>
 #include <hgesprite.h>
+#include <GfxFont.h>
 
 HGE *hge=0;
 HTEXTURE bgtex;
 hgeSprite *bgspr;
+GfxFont *font;
 
 bool RenderFunc()
 {
     hge->Gfx_BeginScene();
 
     bgspr->Render(0,0);
-
+    font->Print(5, 5, L"测试 dt:%.3f\nFPS:%d (constant)", hge->Timer_GetDelta(), hge->Timer_GetFPS());
     hge->Gfx_EndScene();
     return false;
 }
@@ -37,9 +39,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     {
         bgtex=hge->Texture_Load("bg.png");
         bgspr=new hgeSprite(bgtex,0,0,800,600);
-        
+        font = new GfxFont(L"Microsoft YaHei",12);
+        font->SetColor(0xffffffff);
         hge->System_Start();
-        
+
+        delete font;
         delete bgspr;
         hge->Texture_Free(bgtex);
     }
