@@ -12,7 +12,7 @@ bool RenderFunc()
     hge->Gfx_BeginScene();
 
     bgspr->Render(0,0);
-    font->Print(5, 5, L"测试 dt:%.3f\nFPS:%d (constant)", hge->Timer_GetDelta(), hge->Timer_GetFPS());
+    font->Print(5, 5, L"かみさ测试 dt:%.3f\nFPS:%d (constant)", hge->Timer_GetDelta(), hge->Timer_GetFPS());
     hge->Gfx_EndScene();
     return false;
 }

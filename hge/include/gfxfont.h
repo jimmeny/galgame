@@ -81,8 +81,10 @@
      virtual void    Print( float x, float y, const wchar_t *format, ... )
      {
          wchar_t sBuffer[10240] = {0};
-         wchar_t *lpsArg=(wchar_t*)&format+sizeof(format);
-         swprintf_s(sBuffer,10240, format,lpsArg);
+         va_list pArgList;
+         va_start(pArgList, format);
+         _vsnwprintf(sBuffer,10240, format, pArgList);
+         va_end(pArgList);
          Render(x,y,sBuffer);
      }
      virtual void    Render(float x, float y, const wchar_t* text )
