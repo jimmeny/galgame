@@ -11,3 +11,20 @@
 *.lai
 *.la
 *.a
+
+#VS files
+*.opensdf
+*.sdf
+*.suo
+*.user
+*.aps
+Debug
+MD
+MDd
+MT
+MTd
+Release
+build
+ipch
+x64
+

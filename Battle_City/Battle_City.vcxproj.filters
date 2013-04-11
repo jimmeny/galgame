@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="engine.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="res.cpp">
+      <Filter>res</Filter>
+    </ClCompile>
+    <ClCompile Include="button.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="menu.cpp">
+      <Filter>view</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="res">
+      <UniqueIdentifier>{d76bbd04-7235-451a-b037-9c4e8a4793e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility">
+      <UniqueIdentifier>{654c3938-f646-443c-947d-ff7eb7b31950}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine">
+      <UniqueIdentifier>{7c0a1447-0852-4465-aaa8-f4d1470dcc63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="control">
+      <UniqueIdentifier>{ea82d86e-b2df-4c7f-b051-9c3ae358281b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="view">
+      <UniqueIdentifier>{279c4207-db75-4daa-92f2-8c2a763364c0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="singleton.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="engine.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="res.h">
+      <Filter>res</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
+      <Filter>view</Filter>
+    </ClInclude>
+    <ClInclude Include="menu.h">
+      <Filter>view</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
