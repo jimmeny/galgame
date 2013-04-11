@@ -12,7 +12,7 @@ bool RenderFunc()
     hge->Gfx_BeginScene();
 
     bgspr->Render(0,0);
-    font->Print(5, 5, L"かみさ测试 dt:%.3f\nFPS:%d (constant)", hge->Timer_GetDelta(), hge->Timer_GetFPS());
+    font->Print(5, 5, L"测试 dt:%.3f\nFPS:%d (constant)", hge->Timer_GetDelta(), hge->Timer_GetFPS());
     hge->Gfx_EndScene();
     return false;
 }
@@ -24,6 +24,12 @@ bool FrameFunc()
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 { 
+#ifndef  NDEBUG     
+	AllocConsole();
+	freopen("CONOUT$", "a", stdout);
+#endif
+    printf("Start!\n\n");
+    
     hge=hgeCreate(HGE_VERSION);
     hge->System_SetState(HGE_SCREENWIDTH, 800);
     hge->System_SetState(HGE_SCREENHEIGHT,600);
@@ -34,6 +40,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     hge->System_SetState(HGE_TITLE, "hello world");
     hge->System_SetState(HGE_WINDOWED,true);
     hge->System_SetState(HGE_USESOUND,false);
+    hge->System_SetState(HGE_DONTSUSPEND, true);
 
     if(hge->System_Initiate())
     {
