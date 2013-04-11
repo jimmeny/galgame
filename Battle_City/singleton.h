@@ -2,24 +2,24 @@
 #define SINGLETON_H_
 
 template<class T>
-class singleton
+class Singleton
 {
 public:
     static T& Instance();
 protected:
-    singleton(){}
-    virtual ~singleton() {}	
+    Singleton(){}
+    virtual ~Singleton() {}	
 private:
-    singleton(const singleton&);
-    singleton& operator= (const singleton&);
+    Singleton(const Singleton&);
+    Singleton& operator= (const Singleton&);
 };
 
 
 template<class T>
-T& singleton<T>::Instance()
+T& Singleton<T>::Instance()
 {
-    static T instance_;
-    return instance_;
+    static T instance;
+    return instance;
 }
 
 #endif
