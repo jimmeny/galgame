@@ -1,102 +1,107 @@
 ﻿#include <hge.h>
 #include <hgesprite.h>
-#include <hgeanim.h>
-#include <GfxFont.h>
+#include <hgegui.h>
+#include "menu.h"
 
 HGE *hge=0;
 HTEXTURE bgtex;
-HTEXTURE fishtex;
-HTARGET  target;
-
+HTEXTURE cursortex;
 hgeSprite *bgspr;
-hgeSprite *tar;
+hgeSprite *cursorspr;
 GfxFont *font;
-hgeAnimation *anim;
-
-bool GfxRestoreFunc()
-{
-    if(tar && target)
-        tar->SetTexture(hge->Target_GetTexture(target));
-    return false;
-}
-
-float speed = -0.5;
-float x = 800,y = 40;
-float dt ;
+hgeGUI *gui;
 
 bool RenderFunc()
 {
-    dt = hge->Timer_GetDelta();
-    anim->Update(dt); 
-
-    hge->Gfx_BeginScene(target);
-    hge->Gfx_Clear(0xFF000000);
-    anim->Render(0,0);
-    hge->Gfx_EndScene();
-
     hge->Gfx_BeginScene();
-    tar->Render(x,y);
+	bgspr->Render(0,0);
+
+	gui->Render();
+    
+
+    font->Print(5, 5, L"かみさまの测试 dt:%.3f\nFPS:%d (constant)", hge->Timer_GetDelta(), hge->Timer_GetFPS());
+
     hge->Gfx_EndScene();
-
-    x += speed;
-    //hge->Gfx_BeginScene();
-
-    //bgspr->Render(0,0);
-    //font->Print(5, 5, L"测试 dt:%.3f\nFPS:%d (constant)", hge->Timer_GetDelta(), hge->Timer_GetFPS());
-    //printf("dt:%.3f\nFPS:%d (constant)", hge->Timer_GetDelta(), hge->Timer_GetFPS());
-    //hge->Gfx_EndScene();
     return false;
 }
 
 bool FrameFunc()
 {
-    
+	float dt=hge->Timer_GetDelta();
+	static float t=0.0f;
+	float tx,ty;
+	int id;
+	static int lastid=0;
+
+	if(hge->Input_GetKeyState(HGEK_ESCAPE))
+	{
+		lastid=4; gui->Leave();
+	}
+	id=gui->Update(dt);
+	if(id == -1)
+	{
+		switch(lastid)
+		{
+			case 1:
+			case 2:
+			case 3:
+				gui->SetFocus(1);
+				gui->Enter();
+				break;
+
+			case 4: return true;
+		}
+	}
+	else if(id)
+	{
+		lastid=id; gui->Leave();
+	}
     return false;
 }
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 { 
-#ifndef  NDEBUG     
-    AllocConsole();
-    FILE *stream;
-    freopen_s(&stream,"CONOUT$","a",stdout);
-#endif
-    printf("Start!\n\n");
-
     hge=hgeCreate(HGE_VERSION);
     hge->System_SetState(HGE_SCREENWIDTH, 800);
     hge->System_SetState(HGE_SCREENHEIGHT,600);
     hge->System_SetState(HGE_SHOWSPLASH, false);
     hge->System_SetState(HGE_FRAMEFUNC, FrameFunc);
     hge->System_SetState(HGE_RENDERFUNC,RenderFunc);
-    hge->System_SetState(HGE_GFXRESTOREFUNC, GfxRestoreFunc);
-    hge->System_SetState(HGE_FPS,30);
+    hge->System_SetState(HGE_FPS,1000);
     hge->System_SetState(HGE_TITLE, "hello world");
     hge->System_SetState(HGE_WINDOWED,true);
     hge->System_SetState(HGE_USESOUND,false);
-    hge->System_SetState(HGE_DONTSUSPEND, true);
-
-    target = 0;
-    tar = 0;
 
     if(hge->System_Initiate())
     {
-        //bgtex=hge->Texture_Load("bg.png");
-        fishtex = hge->Texture_Load("fish.png");
-        anim = new hgeAnimation(fishtex,20,20,0,0,hge->Texture_GetWidth(fishtex,false)/10.0,hge->Texture_GetHeight(fishtex,false)/2.0);
-        anim->Play();
-        target = hge->Target_Create(hge->Texture_GetWidth(fishtex,false)/10.0,hge->Texture_GetHeight(fishtex,false)/2.0,false);
-        tar=new hgeSprite(hge->Target_GetTexture(target), 0, 0, hge->Texture_GetWidth(fishtex,false)/10.0, hge->Texture_GetHeight(fishtex,false)/2.0);
-        //bgspr=new hgeSprite(bgtex,0,0,800,600);
-        //font = new GfxFont(L"Microsoft YaHei",12);
-        //font->SetColor(0xffffffff);
+        bgtex=hge->Texture_Load("bg.png");
+		cursortex=hge->Texture_Load("cursor.png");
+
+        bgspr=new hgeSprite(bgtex,0,0,800,600);
+        font = new GfxFont(L"Microsoft YaHei",12);
+        font->SetColor(0xffffffff);
+
+		cursorspr=new hgeSprite(cursortex,0,0,32,32);
+		gui=new hgeGUI();
+
+		gui->AddCtrl(new MenuItem(1,400,200,0.0f,L"スタート"));
+		gui->AddCtrl(new MenuItem(2,400,240,0.1f,L"オプション"));
+		gui->AddCtrl(new MenuItem(3,400,280,0.2f,L"説明"));
+		gui->AddCtrl(new MenuItem(4,400,320,0.3f,L"終了"));
+
+		gui->SetNavMode(HGEGUI_UPDOWN | HGEGUI_CYCLED);
+		gui->SetCursor(cursorspr);
+		gui->SetFocus(1);
+		gui->Enter();
+
         hge->System_Start();
-        
-        delete anim;
+
         delete font;
         delete bgspr;
-        delete tar;
+		delete gui;
+		delete cursorspr;
         hge->Texture_Free(bgtex);
+        hge->Texture_Free(cursortex);
     }
 
     hge->System_Shutdown();
