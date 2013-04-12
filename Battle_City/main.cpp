@@ -63,11 +63,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 { 
     hge=hgeCreate(HGE_VERSION);
     hge->System_SetState(HGE_SCREENWIDTH, 800);
-<<<<<<< HEAD
     hge->System_SetState(HGE_SCREENHEIGHT,510);
-=======
-    hge->System_SetState(HGE_SCREENHEIGHT,600);
->>>>>>> db4bd82524bdda1a09218f3e2944ecde385e8dc1
     hge->System_SetState(HGE_SHOWSPLASH, false);
     hge->System_SetState(HGE_FRAMEFUNC, FrameFunc);
     hge->System_SetState(HGE_RENDERFUNC,RenderFunc);
@@ -78,11 +74,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     if(hge->System_Initiate())
     {
-<<<<<<< HEAD
         bgtex=hge->Texture_Load("bg.jpg");
-=======
-        bgtex=hge->Texture_Load("bg.png");
->>>>>>> db4bd82524bdda1a09218f3e2944ecde385e8dc1
 		cursortex=hge->Texture_Load("cursor.png");
 
         bgspr=new hgeSprite(bgtex,0,0,800,600);
