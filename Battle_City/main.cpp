@@ -45,11 +45,12 @@ bool FrameFunc()
 			case 1:
 			case 2:
 			case 3:
+			case 4:
 				gui->SetFocus(1);
 				gui->Enter();
 				break;
 
-			case 4: return true;
+			case 5 : return true;
 		}
 	}
 	else if(id)
@@ -85,9 +86,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		gui=new hgeGUI();
 
 		gui->AddCtrl(new MenuItem(1,400,200,0.0f,L"スタート"));
-		gui->AddCtrl(new MenuItem(2,400,240,0.1f,L"オプション"));
-		gui->AddCtrl(new MenuItem(3,400,280,0.2f,L"説明"));
-		gui->AddCtrl(new MenuItem(4,400,320,0.3f,L"終了"));
+		gui->AddCtrl(new MenuItem(2,400,240,0.1f,L"続き"));
+		gui->AddCtrl(new MenuItem(3,400,280,0.2f,L"オプション"));
+		gui->AddCtrl(new MenuItem(4,400,320,0.3f,L"説明"));
+		gui->AddCtrl(new MenuItem(5,400,360,0.4f,L"終了"));
 
 		gui->SetNavMode(HGEGUI_UPDOWN | HGEGUI_CYCLED);
 		gui->SetCursor(cursorspr);
